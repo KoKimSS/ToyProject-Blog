@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <title>글쓰기</title>
+</head>
+<body>
+<!-- 글쓰기 폼 -->
+<form action="/save-post" method="post">
+  <input type="text" name="title" placeholder="제목">
+  <textarea name="content" placeholder="내용"></textarea>
+  <input type="text" name="category" placeholder="카테고리">
+  <input type="text" name="tags" placeholder="태그 ( ' / ' 로 구분)">
+  <button type="submit">글쓰기</button>
+</form>
+</body>
+</html>

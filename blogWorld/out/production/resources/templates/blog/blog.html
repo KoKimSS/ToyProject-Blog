@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${title}">Blog Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+    }
+    .navbar {
+      justify-content: center;
+      border-bottom: 1px solid black;
+    }
+    .navbar-brand {
+      font-size: 1.5em;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: -250px;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      border-right: 1px solid black;
+      width: 250px;
+      transition: left 0.3s;
+      background-color: #ffffff; /* Updated */
+    }
+    .sidebar-open {
+      left: 0;
+    }
+    .toggle-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+      transition: left 0.3s;
+    }
+    .toggle-button i { /* Added */
+      color: #000000; /* Added */
+    }
+    .toggle-button-open {
+      left: 260px;
+    }
+    footer {
+      border-top: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href= th:text="${title}">Blog Title</a>
+</nav>
+<button class="btn btn-light toggle-button" type="button"> <!-- Updated -->
+  <i class="fas fa-bars"></i>
+</button>
+<div class="sidebar" id="sidebar">
+  <div class="card">
+    <h5 class="card-header">Categories</h5>
+    <div class="card-body">
+      <ul class="list-unstyled mb-0">
+        <li th:each="category : ${categories}">
+          <a th:href="@{/blog/{blogId}/{cateId}(blogId=${blogId != null ? blogId : ''}, cateId=${category.getCategoryId()})}" th:text="${category.getCategoryName()}">Category</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<main class="container mt-4 ml-auto">
+  <div class="row">
+    <div class="col-md-8 offset-md-4" th:each="posterSearchDto : ${posterSearchDtoList}">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">
+            <a th:href="@{/blog/{blogId}/poster/{posterId}(blogId=${blogId != null ? blogId : ''}, posterId=${posterSearchDto.getPoster().getPosterId() != null ? posterSearchDto.getPoster().getPosterId() : ''})}" th:text="${posterSearchDto.getPoster().getPosterTitle()}">Post Title</a>
+          </h2>
+          <p class="card-text" th:text="${posterSearchDto.getPoster().getPosterContents()}">Post Content</p>
+        </div>
+        <div class="card-footer text-muted" th:text="${posterSearchDto.getPoster().getLastModifiedDate()}">Post Date</div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="py-5 bg-light">
+  <div class="container">
+    <p class="m-0 text-center text-dark">Designed by Tistory</p>
+    <div class="text-center mt-3">
+      <a th:href="@{/blog/{blogId}/post(blogId=${blogId != null ? blogId : ''})}" class="btn btn-primary">Create New Post</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('.toggle-button').click(function () {
+      $('#sidebar').toggleClass('sidebar-open');
+      $(this).toggleClass('toggle-button-open');
+    });
+  });
+</script>
+</body>
+</html>
