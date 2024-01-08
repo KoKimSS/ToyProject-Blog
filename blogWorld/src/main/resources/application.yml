@@ -16,6 +16,23 @@ spring:
 #    user:
 #      password: 7d8e7dbf-f065-4694-a487-64b7aec11966
 
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: {c813813d4950a2fda9952ee5177ac764} # 앱키 -> REST API 키
+            client-secret: Z4WgtkWGLou8pCTyAyDAxmdOEb6a9FbF # 카카오 로그인 -> 보안 -> Client Secret 코드
+            authorization-grant-type: authorization_code
+            redirect-uri: https://localhost:8080/login/oauth2/code/kakao # yml 파일에서 {} 가 spring 특수문자로 인식되게 하기 위해 " " 사용
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize # "인가 코드 받기" 항목
+            token-uri: https://kauth.kakao.com/oauth/token # "토큰 받기" 항목
+            user-info-uri: https://kapi.kakao.com/v2/user/me # "사용자 정보 가져오기" 항목
+            user-name-attribute: id # 식별자 . 카카오의 경우 "id" 사용
+
 logging:
   level:
     org.hibernate.sql: debug

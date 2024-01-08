@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static lombok.AccessLevel.*;
@@ -30,6 +31,7 @@ public class User extends BaseEntity {
     private String phone;
     private String email;
     private String profileImage;
+    private String roles; //"USER ADMIN"
     @ColumnDefault("true")
     private boolean valid;
     @OneToMany(mappedBy = "user")
@@ -43,5 +45,12 @@ public class User extends BaseEntity {
         user.phone=Phone;
         user.email = Email;
         return user;
+    }
+
+    public List<String> getRoleList() {
+        if (!this.roles.equals(null)) {
+            return Arrays.asList(this.roles.split(" "));
+        }
+        return new ArrayList<>();
     }
 }

@@ -6,6 +6,9 @@ import ToyProject.blogWorld.web.form.RegistForm;
 import ToyProject.blogWorld.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -64,10 +68,16 @@ public class LoginController {
         return "user/login";
     }
 
+    @GetMapping("/login/oauth2/code/kakao")
+    @ResponseBody
+    String kakaoOauthLogin() {
+        return "success";
+    }
     @GetMapping("/register")
     String registPage(Model model) {
-        RegistForm form=new RegistForm();
-        model.addAttribute("form",form);
+
+        RegistForm form = new RegistForm();
+        model.addAttribute("form", form);
         return "user/register";
     }
 

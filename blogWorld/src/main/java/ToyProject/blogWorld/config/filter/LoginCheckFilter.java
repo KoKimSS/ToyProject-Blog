@@ -1,4 +1,4 @@
-package ToyProject.blogWorld.web.filter;
+package ToyProject.blogWorld.config.filter;
 
 import ToyProject.blogWorld.web.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
