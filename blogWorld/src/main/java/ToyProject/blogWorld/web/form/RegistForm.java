@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class RegistForm {
-    private String userUid;
-    private String userUpw;
+    private String loginId;
+    private String password;
     private String userName;
     private String userEmail;
     private String userPhone;

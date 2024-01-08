@@ -38,17 +38,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println("JwtAuthenticationFilter : 로그인 시도중");
 
-
-        ObjectMapper om = new ObjectMapper();
-        User user = null;
-
-        try {
-            user = om.readValue(request.getInputStream(), User.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(user);
-
+        String loginId = request.getParameter("loginId");
+        System.out.println("loginId = " + loginId);
+        String password = request.getParameter("password");
+        System.out.println("password = " + password);
+        User user = User.createNewUser(loginId, password,null, null, null);
+        System.out.println(user.getLoginId()+" "+user.getPassword());
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user.getLoginId(), user.getPassword());
 
@@ -68,7 +63,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
         String username = obtainUsername(request);
         username = (username != null) ? username.trim() : "";
-        String password = obtainPassword(request);
+        password = obtainPassword(request);
         password = (password != null) ? password : "";
         UsernamePasswordAuthenticationToken authRequest = UsernamePasswordAuthenticationToken.unauthenticated(username,
                 password);
