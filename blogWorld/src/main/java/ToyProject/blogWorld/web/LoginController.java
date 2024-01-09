@@ -6,13 +6,21 @@ import ToyProject.blogWorld.web.form.RegistForm;
 import ToyProject.blogWorld.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +34,8 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class LoginController {
 
+
+    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService;
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -33,6 +43,7 @@ public class LoginController {
     String loginPage() {
         return "user/login";
     }
+
 
     @PostMapping("/login")
     String login(HttpServletRequest request, @RequestParam(defaultValue = "/") String redirectURL, Model model) {

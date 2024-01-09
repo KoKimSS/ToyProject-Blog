@@ -21,6 +21,8 @@ import java.util.Date;
 
 import com.auth0.jwt.JWT;
 
+import static ToyProject.blogWorld.config.jwt.JwtTokenUtil.getJwtToken;
+
 /**
  * 스프링 시큐리티에서 UsernamePasswordAuthenticationFilter 가 있음
  * login 요청해서 username, password 전송을 하면 (post)
@@ -90,13 +92,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("successfulAuthentication 실행 됨 - 인증 완료");
         PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 
-        String jwtToken = JWT.create()
-                .withSubject(principalDetailis.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", principalDetailis.getUser().getId())
-                .withClaim("loginId", principalDetailis.getUser().getLoginId())
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
-
+        String jwtToken = getJwtToken(principalDetailis);
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
     }
+
+
 }

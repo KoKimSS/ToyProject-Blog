@@ -2,6 +2,7 @@ package ToyProject.blogWorld.config;
 
 import ToyProject.blogWorld.config.jwt.JwtAuthenticationFilter;
 import ToyProject.blogWorld.config.jwt.JwtAuthorizationFilter;
+import ToyProject.blogWorld.config.oauth.OAuthAuthenticationSuccessHandler;
 import ToyProject.blogWorld.config.oauth.PrincipalOauth2UserService;
 import ToyProject.blogWorld.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class SecurityConfig {
     private final UserRepository userRepository;
     private final CorsConfig corsConfig;
 
-    private static final String[] userFilter = {};
+    private static final String[] userFilter = {"/user/**"};
     private static final String[] managerFilter = {};
     private static final String[] adminFilter = {};
 
@@ -64,7 +65,8 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .userInfoEndpoint(userInfoEndpointConfig -> {
                     userInfoEndpointConfig.userService(principalOauth2UserService);
-                }));
+                })
+                .successHandler(new OAuthAuthenticationSuccessHandler()));
         return http.build();
     }
 
