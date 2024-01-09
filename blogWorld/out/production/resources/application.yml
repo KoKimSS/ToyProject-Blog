@@ -18,21 +18,21 @@ spring:
       client:
         registration:
           google:
-            client-id: 152842488692-r6qog1424032shd2bmrkdkfd8953a47c.apps.googleusercontent.com
-            client-secret: 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
+            client-id: ${google_client_id}
+            client-secret: ${google_client_secret}
             scope:
               - email
               - profile
           facebook:
-            client-id: 390373460055871
-            client-secret: 7540714caed79642a0ea6e0b45ad54db
+            client-id: ${facebook_client_id}
+            client-secret: ${facebook_client_secret}
             scope:
               - email
               - public_profile
 
           naver:
-            client-id: GsMNPfQO7Ocw17k8_i9Y
-            client-secret: 2_2iTF_jh7
+            client-id: ${naver_client_id}
+            client-secret: ${naver_client_secret}
             scope:
               - name
               - email
@@ -43,8 +43,8 @@ spring:
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
 
           kakao :
-            client-id: 6657fcb6243fa8e4523b7b27615b85ad
-            client-secret: jdKH4v5u5KYtzNA6ybjh4SzOoor05U0W
+            client-id: ${kakao_client_id}
+            client-secret: ${kakao_client_secret}
             scope:
               - name
               - account_email
