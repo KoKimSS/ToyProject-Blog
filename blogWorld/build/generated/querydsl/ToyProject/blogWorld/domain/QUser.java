@@ -48,6 +48,14 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phone = createString("phone");
 
+    public final StringPath profileImage = createString("profileImage");
+
+    public final StringPath provider = createString("provider");
+
+    public final StringPath providerId = createString("providerId");
+
+    public final StringPath roles = createString("roles");
+
     public final BooleanPath valid = createBoolean("valid");
 
     public QUser(String variable) {

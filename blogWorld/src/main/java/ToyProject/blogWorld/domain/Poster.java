@@ -26,6 +26,19 @@ public class Poster extends BaseTimeEntity {
     private String contents;
     private String titlePic;
     private boolean valid;
-    @OneToMany(mappedBy = "poster")
+    @OneToMany(mappedBy = "poster",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tagList = new ArrayList<>();
+
+    public static Poster createPoster(String title, String contents,Category category) {
+        Poster poster = new Poster();
+        poster.title = title;
+        poster.contents = contents;
+        poster.category = category;
+        return poster;
+    }
+
+    public static void validFalse(Poster poster) {
+        poster.category=null;
+        poster.valid=false;
+    }
 }

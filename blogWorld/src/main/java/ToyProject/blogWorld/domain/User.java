@@ -54,9 +54,9 @@ public class User extends BaseEntity {
         user.name = username;
         user.password = password;
         user.email = email;
+        user.roles = "ROLE_USER";
         user.provider = provider;
         user.providerId = providerId;
-        user.roles = "ROLE_USER";
         return user;
     }
 

@@ -22,7 +22,9 @@ public class QBlog extends EntityPathBase<Blog> {
 
     public static final QBlog blog = new QBlog("blog");
 
-    public final NumberPath<Long> blogId = createNumber("blogId", Long.class);
+    public final ListPath<Category, QCategory> categoryList = this.<Category, QCategory>createList("categoryList", Category.class, QCategory.class, PathInits.DIRECT2);
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
 

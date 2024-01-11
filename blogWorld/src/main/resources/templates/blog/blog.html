@@ -67,7 +67,7 @@
     <div class="card-body">
       <ul class="list-unstyled mb-0">
         <li th:each="category : ${categories}">
-          <a th:href="@{/blog/{blogId}/{cateId}(blogId=${blogId != null ? blogId : ''}, cateId=${category.getCategoryId()})}" th:text="${category.getCategoryName()}">Category</a>
+          <a th:href="@{/blog/{blogId}/{cateId}(blogId=${blogId != null ? blogId : ''}, cateId=${category.getId()})}" th:text="${category.getCategoryName()}">Category</a>
         </li>
       </ul>
     </div>
@@ -90,7 +90,7 @@
 </main>
 <footer class="py-5 bg-light">
   <div class="container">
-    <p class="m-0 text-center text-dark">Designed by Tistory</p>
+    <p class="m-0 text-center text-dark">Designed by KSS</p>
     <div class="text-center mt-3">
       <a th:href="@{/blog/{blogId}/post(blogId=${blogId != null ? blogId : ''})}" class="btn btn-primary">Create New Post</a>
     </div>

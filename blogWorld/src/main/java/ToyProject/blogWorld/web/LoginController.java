@@ -1,6 +1,7 @@
 package ToyProject.blogWorld.web;
 
 import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.repository.user.UserRepository;
 import ToyProject.blogWorld.service.UserService;
 import ToyProject.blogWorld.web.form.RegistForm;
 import ToyProject.blogWorld.web.session.SessionConst;
@@ -35,8 +36,8 @@ import java.util.regex.Pattern;
 public class LoginController {
 
 
-    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService;
     private final UserService userService;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/login")
@@ -100,11 +101,15 @@ public class LoginController {
         if (!StringUtils.hasText(loginId)) {
             errors.put("userUid", "유저 아이디는 필수 입니다."); //유저 이름은 15글자 까지
         } else {
-            if (loginId.length() > 15) {
-                errors.put("loginId", "유저 아이디는 15글자까지 입니다.");
-            } else {
-                if (!validate(password)) {
-                    errors.put("password", "유저 아이디는 영소문자와 숫자로 이루어 집니다.");
+            if(!userRepository.existsByloginId(loginId)){
+                errors.put("loginId", "중복된 아이디 입니다");
+            }else {
+                if (loginId.length() > 15) {
+                    errors.put("loginId", "유저 아이디는 15글자까지 입니다.");
+                } else {
+                    if (!validate(password)) {
+                        errors.put("password", "유저 아이디는 영소문자와 숫자로 이루어 집니다.");
+                    }
                 }
             }
         }
@@ -149,9 +154,7 @@ public class LoginController {
 
         User user = User.createNewUser( form.getLoginId(), bCryptPasswordEncoder.encode(form.getPassword()),form.getUserName(),
                 form.getUserPhone(), form.getUserEmail());
-
         userService.createUser(user);
-
         return "redirect:/";
     }
 

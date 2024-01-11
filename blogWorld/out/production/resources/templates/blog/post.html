@@ -99,7 +99,7 @@
     <div class="card-body">
       <ul class="list-unstyled mb-0">
         <li th:each="category : ${categories}">
-          <a th:href="@{/blog/{blogId}/{cateId}(blogId=${blogId != null ? blogId : ''}, cateId=${category.getCategoryId()})}" th:text="${category.getCategoryName()}">Category</a>
+          <a th:href="@{/blog/{blogId}/{cateId}(blogId=${blogId != null ? blogId : ''}, cateId=${category.getId()})}" th:text="${category.getCategoryName()}">Category</a>
         </li>
       </ul>
     </div>
@@ -110,17 +110,17 @@
     <form th:action="@{/blog/{blogId}/post(blogId=${blogId != null ? blogId : ''})}" method="post">
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" id="title" name="posterTitle" required>
+        <input type="title" id="title" name="title" required>
       </div>
       <div class="form-group">
-        <label for="content">Content</label>
-        <textarea id="content" name="posterContents" rows="6" required></textarea>
+        <label for="contents">Content</label>
+        <textarea id="contents" name="contents" rows="6" required></textarea>
       </div>
       <div class="form-group">
-        <label for="category">Category</label>
-        <select id="category" name="categoryId" required>
+        <label for="categoryId">Category</label>
+        <select id="categoryId" name="categoryId" required>
           <option value="">Select category</option>
-          <option th:each="category : ${categories}" th:value="${category.getCategoryId()}" th:text="${category.getCategoryName()}"></option>
+          <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getCategoryName()}"></option>
         </select>
       </div>
       <div class="form-group">

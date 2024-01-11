@@ -32,7 +32,7 @@
   <div th:if="${user}">
     <a href="/user" class="text-decoration-none text-dark">
       <img th:src="${user.profileImage != null} ? ${user.profileImage} : '/images/default-profile.png'" class="rounded-circle" width="50" height="50" alt="Profile Image">
-      <span th:text="${user.userName}"></span>
+      <span th:text="${user.getName()}"></span>
     </a>
     <form action="/logout" method="post" style="display:inline;">
       <button type="submit" class="btn btn-outline-secondary ml-2">로그아웃</button>
@@ -48,16 +48,16 @@
     <form th:action="@{/user/{userId}(userId=${user.getId()})}" method="post" th:object="${user}">
       <div class="card-body">
         <div class="form-group">
-          <label for="userName">사용자 이름</label>
-          <input type="text" class="form-control" id="userName" th:field="*{userName}" th:placeholder="${user != null} ? ${user.userName} : '사용자 이름'">
+          <label for="name">사용자 이름</label>
+          <input type="text" class="form-control" id="name" th:field="*{name}" th:placeholder="${user != null} ? ${user.getName()} : '사용자 이름'">
         </div>
         <div class="form-group">
-          <label for="userEmail">이메일</label>
-          <input type="email" class="form-control" id="userEmail" th:field="*{userEmail}" th:placeholder="${user != null} ? ${user.userEmail} : '이메일'">
+          <label for="email">이메일</label>
+          <input type="email" class="form-control" id="email" th:field="*{email}" th:placeholder="${user != null} ? ${user.getEmail()} : '이메일'">
         </div>
         <div class="form-group">
-          <label for="userPhone">핸드폰</label>
-          <input type="text" class="form-control" id="userPhone" th:field="*{userPhone}" th:placeholder="${user != null} ? ${user.userPhone} : '핸드폰'">
+          <label for="phone">핸드폰</label>
+          <input type="text" class="form-control" id="phone" th:field="*{phone}" th:placeholder="${user != null} ? ${user.getPhone()} : '핸드폰'">
         </div>
         <button type="submit" class="btn btn-primary">프로필 저장</button>
       </div>
@@ -67,19 +67,23 @@
 
   <!-- 블로그 정보 -->
   <h2 class="text-center my-4">당신의 블로그</h2>
-  <div th:if="${blogs != null}">
-    <div th:each="blog : ${blogs}">
+  <div th:if="${blogList != null}">
+    <div th:each="blog : ${blogList}">
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title" th:text="${blog.getBlogName()}">블로그 이름</h5>
-          <p class="card-text" th:text="${blog.getBlogId()}">블로그 설명...</p>
-          <a th:href="@{/blog/{id}(id=${blog.getBlogId()})}" class="card-link">블로그로 이동</a>
+          <h5 class="card-title" th:text="${blog.getName()}">블로그 이름</h5>
+          <p class="card-text" th:text="${blog.getId()}">블로그 설명...</p>
+          <a th:href="@{/blog/{id}(id=${blog.getId()})}" class="card-link">블로그로 이동</a>
+          <!-- Add delete button -->
+          <form th:action="@{/user/{userId}/deleteBlog/{blogId}(userId=${user.getId()}, blogId=${blog.getId()})}" method="post">
+            <button type="submit" class="btn btn-danger">삭제</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
-  <div th:unless="${blogs != null}">
+  <div th:unless="${blogList != null}">
     <p>No blogs found.</p>
   </div>
 
