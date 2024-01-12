@@ -1,17 +1,16 @@
-package ToyProject.blogWorld.web;
+package ToyProject.blogWorld.web.controller.user;
 
 import ToyProject.blogWorld.domain.Blog;
 import ToyProject.blogWorld.domain.User;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
-import ToyProject.blogWorld.repository.user.UserRepository;
 import ToyProject.blogWorld.repository.user.UserUpdateDto;
 import ToyProject.blogWorld.service.BlogService;
 import ToyProject.blogWorld.service.UserService;
+import ToyProject.blogWorld.web.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class MyPageController {
         System.out.println("userBlogList = " + userBlogList);
         model.addAttribute("blogList", userBlogList);
         ControllerUtil.addUserToModel(model);
-        return "user/profile";
+        return "user/mypage";
     }
 
     @PostMapping("user/{userId}")

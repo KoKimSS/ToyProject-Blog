@@ -1,4 +1,4 @@
-package ToyProject.blogWorld.web;
+package ToyProject.blogWorld.web.controller.user;
 
 import ToyProject.blogWorld.domain.User;
 import ToyProject.blogWorld.repository.user.UserRepository;

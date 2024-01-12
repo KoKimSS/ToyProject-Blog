@@ -1,6 +1,5 @@
-package ToyProject.blogWorld.web;
+package ToyProject.blogWorld.web.controller.blog;
 
-import ToyProject.blogWorld.domain.Blog;
 import ToyProject.blogWorld.domain.Category;
 import ToyProject.blogWorld.domain.Poster;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,13 +33,6 @@ public class BlogController {
         return "blog/blog";
     }
 
-
-    @GetMapping("blog/{blogId}/post")
-    String getPosterForm(@PathVariable(required = false) Long blogId, Model model) {
-        blogService.initBlog(model,blogId);
-        return "blog/post";
-    }
-
     @PostMapping("blog/{blogId}/post")
     String createPoster(@PathVariable(required = false) Long blogId, @ModelAttribute PosterCreateDto posterCreateDto, Model model) {
         Category category = categoryRepository.findById(posterCreateDto.getCategoryId()).get();
@@ -56,16 +47,6 @@ public class BlogController {
         blogService.initBlog(model,blogId);
         List<Poster> posters = posterRepository.findAllByCategoryId(categoryId).get();
         model.addAttribute("posters", posters);
-        return "/blog/posterlist";
-    }
-
-    @GetMapping("blog/{blogId}/poster/{posterId}")
-    String getPoster(@PathVariable(required = false) Long blogId,
-                     @PathVariable(required = false) Long posterId,
-                     Model model){
-        blogService.initBlog(model,blogId);
-        Poster poster = posterRepository.findById(posterId).get();
-        model.addAttribute("poster", poster);
-        return "/blog/poster";
+        return "blog/posterList";
     }
 }

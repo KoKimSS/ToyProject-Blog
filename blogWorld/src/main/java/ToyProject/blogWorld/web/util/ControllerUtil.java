@@ -1,4 +1,4 @@
-package ToyProject.blogWorld.web;
+package ToyProject.blogWorld.web.util;
 
 import ToyProject.blogWorld.config.auth.PrincipalDetails;
 import ToyProject.blogWorld.domain.User;

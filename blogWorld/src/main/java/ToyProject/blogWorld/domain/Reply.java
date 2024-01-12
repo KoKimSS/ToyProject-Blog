@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity@Getter
@@ -15,11 +17,23 @@ public class Reply extends BaseTimeEntity {
     @GeneratedValue
     @Column(name = "poster_id")
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Poster poster;
     @OneToOne
     private User user;
     private String contents;
-    @OneToOne
+    private boolean valid;
+    @ManyToOne
     private Reply parentsReply;
+    @OneToMany(mappedBy = "parentsReply")
+    private List<Reply> childReply;
+
+    public static Reply createReply(String contents, Poster poster, User user,Reply parentsReply) {
+        Reply reply = new Reply();
+        reply.contents=contents;
+        reply.poster=poster;
+        reply.user=user;
+        reply.parentsReply = parentsReply;
+        return reply;
+    }
 }

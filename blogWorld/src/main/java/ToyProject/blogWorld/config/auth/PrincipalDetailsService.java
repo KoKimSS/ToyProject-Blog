@@ -23,7 +23,8 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
         System.out.println("PrincipalDetailsService 의 load 동작");
         Optional<User> optionalUser = userRepository.findByLoginId(loginId);
-        System.out.println(optionalUser.get());
-        return new PrincipalDetails(optionalUser.get());
+//        System.out.println(optionalUser.get());
+
+        return new PrincipalDetails(optionalUser.isPresent()?optionalUser.get():null);
     }
 }
