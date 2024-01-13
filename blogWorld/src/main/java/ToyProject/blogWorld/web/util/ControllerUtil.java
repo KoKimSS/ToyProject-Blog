@@ -10,30 +10,36 @@ public class ControllerUtil {
 
     // 유저가 있으면 return user 없으면 return null
     public static User findAndAddUserToModel(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            // Authentication이 PrincipalDetails 타입인 경우에만 형변환
-            if (authentication.getPrincipal() instanceof PrincipalDetails) {
-                PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-                User user = principal.getUser();
-                // Model에 사용자 정보 추가
-                model.addAttribute("user", user);
-                return user;
-            }
-        }
-        return null;
+        Authentication authentication = getAuthentication();
+        if (!isValidAuthentication(authentication)) return null;
+        User user = findUserFromAuth(authentication);
+        return addUserToModel(model, user);
     }
 
-    public static User getUserFromAuth(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            // Authentication이 PrincipalDetails 타입인 경우에만 형변환
-            if (authentication.getPrincipal() instanceof PrincipalDetails) {
-                PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-                User user = principal.getUser();
-                return user;
-            }
+    private static User addUserToModel(Model model, User user) {
+        if (user == null) return null;
+        model.addAttribute("user", user);
+        return user;
+    }
+
+    private static User findUserFromAuth(Authentication authentication) {
+        if (!isInstanceOfPrincipalDetails(authentication)) {
+            return null;
         }
-        return null;
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        User user = principal.getUser();
+        return user;
+    }
+
+    private static boolean isInstanceOfPrincipalDetails(Authentication authentication) {
+        return authentication.getPrincipal() instanceof PrincipalDetails;
+    }
+
+    private static boolean isValidAuthentication(Authentication authentication) {
+        return authentication != null && authentication.isAuthenticated();
+    }
+
+    private static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

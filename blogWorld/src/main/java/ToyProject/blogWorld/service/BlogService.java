@@ -41,4 +41,12 @@ public class BlogService {
             categoryRepository.delete(category);
         });
     }
+
+    public boolean isBlogOwner(Long blogId, User user) {
+        return user.getId()== getBlogById(blogId).getUser().getId();
+    }
+
+    public Blog getBlogById(Long blogId) {
+        return blogRepository.findById(blogId).get();
+    }
 }

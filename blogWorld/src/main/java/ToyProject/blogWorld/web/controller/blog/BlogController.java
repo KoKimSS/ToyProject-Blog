@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -26,9 +24,10 @@ public class BlogController {
     private final CategoryRepository categoryRepository;
     private final CategoryService categoryService;
     private final BlogRepository blogRepository;
+
     @GetMapping("blog/{blogId}")
     String getBlog(@PathVariable(required = false) Long blogId, Model model) {
-        categoryService.findCategoryAndAddToModel(blogId,model);
+        categoryService.findCategoryAndAddToModel(blogId, model);
         String title = blogRepository.findById(blogId).get().getName();
         model.addAttribute("title", title);
         return "blog/blog";
@@ -45,9 +44,8 @@ public class BlogController {
     String getPostersByCategory(@PathVariable(required = false) Long blogId
             , @PathVariable(required = false) Long categoryId
             , Model model) {
-        categoryService.findCategoryAndAddToModel(blogId,model);
-        List<Poster> posters = posterRepository.findAllByCategoryId(categoryId).get();
-        model.addAttribute("posters", posters);
+        categoryService.findCategoryAndAddToModel(blogId, model);
+        model.addAttribute("posters", posterRepository.findAllByCategoryId(categoryId).get());
         return "blog/posterList";
     }
 }

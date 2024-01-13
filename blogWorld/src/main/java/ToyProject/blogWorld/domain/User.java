@@ -61,9 +61,17 @@ public class User extends BaseEntity {
     }
 
     public List<String> getRoleList() {
-        if (!this.roles.equals(null)) {
-            return Arrays.asList(this.roles.split(" "));
+        if (hasRole()) {
+            return rolesToRoleList();
         }
         return new ArrayList<>();
+    }
+
+    private List<String> rolesToRoleList() {
+        return Arrays.asList(this.roles.split(" "));
+    }
+
+    private boolean hasRole() {
+        return !this.roles.equals(null);
     }
 }
