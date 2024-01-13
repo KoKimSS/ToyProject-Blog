@@ -14,25 +14,22 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Optional;
 
+import static ToyProject.blogWorld.domain.Category.*;
+
 @Service
 @RequiredArgsConstructor
 public class BlogService {
     private final BlogRepository blogRepository;
     private final CategoryRepository categoryRepository;
-    private final PosterRepository posterRepository;
     public List<Blog> getUserBlogList(Long userId) {
         return blogRepository.findByUserId(userId);
     }
 
     public void createNewBlog(String blogName,User user){
         Blog savedBlog = blogRepository.save(Blog.createBlog(blogName, user));
-        categoryRepository.save(Category.createBasicCategory(savedBlog));
+        categoryRepository.save(createBasicCategory(savedBlog));
     }
 
-    public void initBlog(Model model, Long blogId) {
-        List<Category> categories = categoryRepository.findAllByBlogId(blogId).get();
-        model.addAttribute("categories", categories);
-    }
 
     public void deleteBlog(Long blogId) {
         Optional<Blog> byId = blogRepository.findById(blogId);
@@ -40,7 +37,7 @@ public class BlogService {
         List<Category> categoryList = blog.getCategoryList();
         categoryList.stream().forEach(category -> {
             category.getPosterList()
-                    .stream().forEach(poster -> Poster.validFalse(poster));
+                    .stream().forEach(poster -> Poster.setValidFalse(poster));
             categoryRepository.delete(category);
         });
     }

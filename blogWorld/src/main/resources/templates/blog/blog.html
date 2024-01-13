@@ -56,7 +56,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href= th:text="${title}">Blog Title</a>
+  <a class="navbar-brand" th:href="@{/blog/{blogId}(blogId=${blogId != null ? blogId : ''})}" th:text="${title}">Blog 123</a>
 </nav>
 <button class="btn btn-light toggle-button" type="button"> <!-- Updated -->
   <i class="fas fa-bars"></i>

@@ -4,9 +4,9 @@ import ToyProject.blogWorld.domain.Category;
 import ToyProject.blogWorld.domain.Poster;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
-import ToyProject.blogWorld.repository.poster.PosterCreateDto;
+import ToyProject.blogWorld.repository.poster.PosterDto;
 import ToyProject.blogWorld.repository.poster.PosterRepository;
-import ToyProject.blogWorld.service.BlogService;
+import ToyProject.blogWorld.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,21 +22,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class BlogController {
-    private final BlogRepository blogRepository;
     private final PosterRepository posterRepository;
     private final CategoryRepository categoryRepository;
-
-    private final BlogService blogService;
+    private final CategoryService categoryService;
+    private final BlogRepository blogRepository;
     @GetMapping("blog/{blogId}")
     String getBlog(@PathVariable(required = false) Long blogId, Model model) {
-        blogService.initBlog(model,blogId);
+        categoryService.findCategoryAndAddToModel(blogId,model);
+        String title = blogRepository.findById(blogId).get().getName();
+        model.addAttribute("title", title);
         return "blog/blog";
     }
 
     @PostMapping("blog/{blogId}/post")
-    String createPoster(@PathVariable(required = false) Long blogId, @ModelAttribute PosterCreateDto posterCreateDto, Model model) {
-        Category category = categoryRepository.findById(posterCreateDto.getCategoryId()).get();
-        posterRepository.save(Poster.createPoster(posterCreateDto.getTitle(), posterCreateDto.getTitle(), category));
+    String createPoster(@PathVariable(required = false) Long blogId, @ModelAttribute PosterDto posterDto, Model model) {
+        Category category = categoryRepository.findById(posterDto.getCategoryId()).get();
+        posterRepository.save(Poster.createPoster(posterDto.getTitle(), posterDto.getTitle(), category));
         return "redirect:/blog/" + blogId;
     }
 
@@ -44,7 +45,7 @@ public class BlogController {
     String getPostersByCategory(@PathVariable(required = false) Long blogId
             , @PathVariable(required = false) Long categoryId
             , Model model) {
-        blogService.initBlog(model,blogId);
+        categoryService.findCategoryAndAddToModel(blogId,model);
         List<Poster> posters = posterRepository.findAllByCategoryId(categoryId).get();
         model.addAttribute("posters", posters);
         return "blog/posterList";

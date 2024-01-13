@@ -1,6 +1,5 @@
 package ToyProject.blogWorld.domain;
 
-import ToyProject.blogWorld.domain.baseentity.BaseEntity;
 import ToyProject.blogWorld.domain.baseentity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +23,9 @@ public class Poster extends BaseTimeEntity {
     private Category category;
     private String title;
     private String contents;
-    private String titlePic;
     private boolean valid;
+    private int viewCount;
+    private int likeCount;
     @OneToMany(mappedBy = "poster",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tagList = new ArrayList<>();
     @OneToMany(mappedBy = "poster", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,8 +39,17 @@ public class Poster extends BaseTimeEntity {
         return poster;
     }
 
-    public static void validFalse(Poster poster) {
+    public void editPoster(String title, String contents, Category category) {
+        this.title = title;
+        this.contents = contents;
+        this.category = category;
+    }
+
+    public static void setValidFalse(Poster poster) {
         poster.category=null;
         poster.valid=false;
+    }
+    public static void incrementViewCount(Poster poster){
+        poster.viewCount++;
     }
 }

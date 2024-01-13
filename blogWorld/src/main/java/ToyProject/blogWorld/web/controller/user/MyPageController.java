@@ -30,26 +30,26 @@ public class MyPageController {
         List<Blog> userBlogList = blogService.getUserBlogList(userId);
         System.out.println("userBlogList = " + userBlogList);
         model.addAttribute("blogList", userBlogList);
-        ControllerUtil.addUserToModel(model);
+        ControllerUtil.findAndAddUserToModel(model);
         return "user/mypage";
     }
 
     @PostMapping("user/{userId}")
     String updateUser(Model model, UserUpdateDto userUpdateDto) {
-        User user = ControllerUtil.addUserToModel(model);
+        User user = ControllerUtil.findAndAddUserToModel(model);
         userService.updateUser(user,userUpdateDto);
         return "redirect:/user/" + user.getId();
     }
 
     @GetMapping("user/{userId}/createBlog")
     String createBlogForm(@PathVariable(name = "userId")Long userId,Model model){
-        ControllerUtil.addUserToModel(model);
+        ControllerUtil.findAndAddUserToModel(model);
         return "user/createBlog";
     }
 
     @PostMapping("user/{userId}/deleteBlog/{blogId}")
     String removeBlog(@PathVariable(required = false) Long blogId,Model model) {
-        User user = ControllerUtil.addUserToModel(model);
+        User user = ControllerUtil.findAndAddUserToModel(model);
         Optional<Blog> blog = blogRepository.findById(blogId);
         if(blog.get().getUser().getId()==user.getId()){
             blogRepository.deleteById(blogId);
@@ -61,7 +61,7 @@ public class MyPageController {
 
     @PostMapping("user/{userId}/createBlog")
     String createBlog(Model model,String blogName){
-        User user = ControllerUtil.addUserToModel(model);
+        User user = ControllerUtil.findAndAddUserToModel(model);
         blogService.createNewBlog(blogName,user);
         return "redirect:/user/"+user.getId();
     }

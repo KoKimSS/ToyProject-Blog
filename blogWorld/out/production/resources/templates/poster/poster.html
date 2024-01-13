@@ -81,21 +81,58 @@
           <h2 class="card-title" th:text="${poster.getTitle()}"></h2>
           <p class="card-text" th:text="${poster.getContents()}"></p>
         </div>
-        <div class="card-footer text-muted" th:text="${poster.getLastModifiedDate()}"></div>
+        <div class="card-footer text-muted" th:text="|조회수: ${poster.getViewCount()} 좋아요 수: ${poster.getLikeCount()} 날짜: ${#temporals.format(poster.getLastModifiedDate(), 'yyyy-MM-dd HH:mm')}|"></div>
       </div>
+      <a th:if="${isOwner}" th:href="@{/blog/{blogId}/poster/{postId}/edit (blogId=${blogId != null ? blogId : ''}, postId=${poster.getId()})}" class="btn btn-primary edit-button">글 수정</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-4">
       <!-- Comment Section -->
-      <div class="card">
-        <h5 class="card-header">Comments</h5>
+      <div class="card mb-4">
         <div class="card-body">
-          <ul class="list-unstyled" id="comment-list">
-            <!-- Comments will be added dynamically here -->
-          </ul>
+          <h5 class="card-title">댓글</h5>
+          <!-- 댓글 목록 -->
+          <div th:each="reply : ${replies}">
+            <div class="card mt-3">
+              <div class="card-body">
+                <p th:text="${reply.getContents()}"></p>
+                <!-- 답글 작성 폼 표시 버튼 -->
+                <button class="btn btn-link" data-toggle="collapse" th:data-target="'#replyForm-' + ${reply.getId()}">
+                  답글 달기
+                </button>
+                <!-- childReply가 있는 경우 버튼을 통해 열고 닫을 수 있게 함 -->
+                <button class="btn btn-link" data-toggle="collapse" th:if="${reply.getChildReply().size() > 0}"
+                        th:data-target="'#childReplies-' + ${reply.getId()}">답글 보기/닫기
+                </button>
+                <!-- childReply 목록을 펼치는 부분 -->
+                <div th:id="'childReplies-' + ${reply.getId()}" class="collapse">
+                  <div th:each="childComment : ${reply.getChildReply()}">
+                    <p th:text="${childComment.getContents()}"></p>
+                    <!-- 추가적인 필요한 정보 표시 -->
+                  </div>
+                </div>
+                <!-- 답글 작성 폼 -->
+                <div th:id="'replyForm-' + ${reply.getId()}" class="collapse">
+                  <form th:action="@{/blog/{blogId}/poster/{postId}/reply(blogId=${blogId != null ? blogId : ''}, postId=${poster.getId()})}" method="post">
+                    <!-- 추가된 부분: 부모 댓글의 ID를 hidden으로 전송 -->
+                    <input type="hidden" name="parentsReplyId" th:value="${reply.getId()}"/>
+                    <div class="form-group">
+                      <label for="comment">답글 작성</label>
+                      <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">답글 완료</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- Add a form for users to submit new comments -->
+      <!-- 댓글 작성 폼 -->
       <form id="comment-form" th:action="@{/blog/{blogId}/poster/{postId}/reply(blogId=${blogId != null ? blogId : ''}, postId=${poster.getId()})}" method="post">
         <div class="form-group">
-          <label for="comment">comments here!</label>
+          <label for="comment">댓글 작성</label>
           <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">댓글 완료</button>
@@ -121,78 +158,5 @@
     });
   });
 </script>
-<!-- Thymeleaf로 모델 값 전달 -->
-<script th:inline="javascript">
-  var replies = /*[[${poster.replyList}]]*/ [${poster.getReplyList()}];
-  var replyPostUrl = /*[[@{/blog/{blogId}/post/{posterId}(blogId=${blogId != null ? blogId : ''}, postId=${poster.getId()})}]]*/;
-</script>
-
-<script th:inline="javascript">
-  $(document).ready(function () {
-    $('.toggle-button').click(function () {
-      $('#sidebar').toggleClass('sidebar-open');
-      $(this).toggleClass('toggle-button-open');
-    });
-
-    // Handle comment form submission
-    $('#comment-form').submit(function (e) {
-      e.preventDefault();
-      var commentText = $('#comment').val().trim();
-
-      if (commentText !== '') {
-        // AJAX request to send the comment to the server
-        $.ajax({
-          type: 'POST',
-          url: ,
-          data: {comment: commentText},
-          success: function (response) {
-            // Assuming the server responds with the updated comment list
-            replies = response;
-            displayComments();
-            $('#comment').val(''); // Clear the comment textarea
-          },
-          error: function (error) {
-            console.error('Error submitting comment:', error);
-          }
-        });
-
-      }
-    });
-  });
-</script>
-
-<script>
-  function displayComments() {
-    var commentList = document.getElementById("comment-list");
-    commentList.innerHTML = "";
-
-    replies.forEach(function (reply) {
-      var commentItem = document.createElement("li");
-      commentItem.innerHTML = `
-                <strong>${reply.user.name}</strong> - ${reply.contents} - ${reply.lastmodifiedDate}
-            `;
-
-      if (reply.childReply.length > 0) {
-        var childList = document.createElement("ul");
-
-        reply.childReply.forEach(function (childReply) {
-          var childItem = document.createElement("li");
-          childItem.innerHTML = `
-                        <strong>${childReply.user.name}</strong> - ${childReply.contents} - ${childReply.lastmodifiedDate}
-                    `;
-          childList.appendChild(childItem);
-        });
-
-        commentItem.appendChild(childList);
-      }
-
-      commentList.appendChild(commentItem);
-    });
-  }
-
-  // Display comments when the page loads
-  displayComments();
-</script>
-
 </body>
 </html>

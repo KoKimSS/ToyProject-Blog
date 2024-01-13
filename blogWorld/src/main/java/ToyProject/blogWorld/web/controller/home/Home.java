@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ToyProject.blogWorld.web.util.ControllerUtil.addUserToModel;
+import static ToyProject.blogWorld.web.util.ControllerUtil.findAndAddUserToModel;
 
 @Slf4j
 @Controller
@@ -17,7 +17,7 @@ import static ToyProject.blogWorld.web.util.ControllerUtil.addUserToModel;
 public class Home {
     @GetMapping("/")
     String homePage(Model model, HttpServletRequest request) {
-        addUserToModel(model);
+        findAndAddUserToModel(model);
         return "main/home";
     }
 }

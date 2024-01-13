@@ -38,7 +38,7 @@ public class Category {
 
     public static Category createBasicCategory(Blog blog){
         Category basicCategory = new Category();
-        basicCategory.categoryName = "기본카테고리";
+        basicCategory.categoryName = "전체";
         basicCategory.blog = blog;
         return basicCategory;
     }

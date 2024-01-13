@@ -95,10 +95,9 @@
                th:text="${poster.getTitle()}"></a>
           </h2>
         </div>
-        <div class="card-footer text-muted"
-             th:text="${poster.getLastModifiedDate()}">Post Date</div>
+        <div class="card-footer text-muted" th:text="|조회수: ${poster.getViewCount()} 좋아요 수: ${poster.getLikeCount()} 날짜: ${#temporals.format(poster.getLastModifiedDate(), 'yyyy-MM-dd HH:mm')}|"></div>
+
       </div>
-    </div>
   </div>
 </main>
 <footer class="py-5 bg-light">

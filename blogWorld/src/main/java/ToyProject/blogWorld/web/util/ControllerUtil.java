@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 public class ControllerUtil {
 
     // 유저가 있으면 return user 없으면 return null
-    public static User addUserToModel(Model model) {
+    public static User findAndAddUserToModel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             // Authentication이 PrincipalDetails 타입인 경우에만 형변환
