@@ -59,7 +59,7 @@ jobs:
           cd ./blogWorld || exit 1  # Navigate to the blogWorld folder or exit if it fails
           
           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} .
           docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }}
           
       ## docker compose up
