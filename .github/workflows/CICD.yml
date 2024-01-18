@@ -54,9 +54,13 @@ jobs:
       #도커 빌드 & 이미지 push
       - name: Docker build & Push
         run: |
+          echo "DOCKER_ID=${{ secrets.DOCKER_ID }}"
+          echo "DOCKER_REPO=${{ secrets.DOCKER_REPO }}"
+    
           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/goorm .
           docker push ${{ secrets.DOCKER_REPO }}/goorm
+          
       ## docker compose up
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
