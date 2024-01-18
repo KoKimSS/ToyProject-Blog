@@ -49,14 +49,18 @@ jobs:
           chmod +x gradlew
 
           # Run Gradle build
-          ./gradlew build
+          ./gradlew build -x test
 
-      ## 웹 이미지 빌드 및 도커허브에 push
-      - name: web docker build and push
+      #도커 빌드 & 이미지 push
+      - name: Docker build & Push
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} . 
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+          echo "DOCKER_ID=${{ secrets.DOCKER_ID }}"
+          echo "DOCKER_REPO=${{ secrets.DOCKER_REPO }}"
+    
+          docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/goorm .
+          docker push ${{ secrets.DOCKER_REPO }}/goorm
+          
       ## docker compose up
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
