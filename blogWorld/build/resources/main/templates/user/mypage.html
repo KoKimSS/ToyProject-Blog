@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <title>사용자 프로필</title>
+  <style>
+    form .top-nav input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 1em;
+    }
+    .top-nav a {
+      font-size: 0.8em;
+    }
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="/">Home</a>
+</div>
+<!-- 사용자 정보 -->
+<div class="text-right my-2">
+  <div th:if="${user}">
+    <a href="/user" class="text-decoration-none text-dark">
+      <img th:src="${user.profileImage != null} ? ${user.profileImage} : '/images/default-profile.png'" class="rounded-circle" width="50" height="50" alt="Profile Image">
+      <span th:text="${user.getName()}"></span>
+    </a>
+    <form action="/logout" method="post" style="display:inline;">
+      <button type="submit" class="btn btn-outline-secondary ml-2">로그아웃</button>
+    </form>
+  </div>
+  <div th:unless="${user}">
+    <a href="/login" class="text-decoration-line-through">로그인</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card mb-4">
+    <form th:action="@{/user/{userId}(userId=${user.getId()})}" method="post" th:object="${user}">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="name">사용자 이름</label>
+          <input type="text" class="form-control" id="name" th:field="*{name}" th:placeholder="${user != null} ? ${user.getName()} : '사용자 이름'">
+        </div>
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input type="email" class="form-control" id="email" th:field="*{email}" th:placeholder="${user != null} ? ${user.getEmail()} : '이메일'">
+        </div>
+        <div class="form-group">
+          <label for="phone">핸드폰</label>
+          <input type="text" class="form-control" id="phone" th:field="*{phone}" th:placeholder="${user != null} ? ${user.getPhone()} : '핸드폰'">
+        </div>
+        <button type="submit" class="btn btn-primary">프로필 저장</button>
+      </div>
+    </form>
+  </div>
+
+
+  <!-- 블로그 정보 -->
+  <h2 class="text-center my-4">당신의 블로그</h2>
+  <div th:if="${blogList != null}">
+    <div th:each="blog : ${blogList}">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${blog.getName()}">블로그 이름</h5>
+          <p class="card-text" th:text="${blog.getId()}">블로그 설명...</p>
+          <a th:href="@{/blog/{id}(id=${blog.getId()})}" class="card-link">블로그로 이동</a>
+          <!-- Add delete button -->
+          <form th:action="@{/user/{userId}/deleteBlog/{blogId}(userId=${user.getId()}, blogId=${blog.getId()})}" method="post">
+            <button type="submit" class="btn btn-danger">삭제</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:unless="${blogList != null}">
+    <p>No blogs found.</p>
+  </div>
+
+  <!-- 블로그 만들기 버튼 -->
+  <div class="text-center mb-4">
+    <a th:href="@{*{userId} + '/createBlog'}" class="btn btn-primary">새 블로그 만들기</a>
+  </div>
+</div>
+</body>
+</html>

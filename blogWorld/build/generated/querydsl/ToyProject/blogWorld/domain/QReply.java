@@ -24,6 +24,8 @@ public class QReply extends EntityPathBase<Reply> {
 
     public final ToyProject.blogWorld.domain.baseentity.QBaseTimeEntity _super = new ToyProject.blogWorld.domain.baseentity.QBaseTimeEntity(this);
 
+    public final ListPath<Reply, QReply> childReply = this.<Reply, QReply>createList("childReply", Reply.class, QReply.class, PathInits.DIRECT2);
+
     public final StringPath contents = createString("contents");
 
     //inherited
@@ -39,6 +41,8 @@ public class QReply extends EntityPathBase<Reply> {
     public final QPoster poster;
 
     public final QUser user;
+
+    public final BooleanPath valid = createBoolean("valid");
 
     public QReply(String variable) {
         this(Reply.class, forVariable(variable), INITS);

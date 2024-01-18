@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      width: 25%;
+      margin: 0 auto;
+    }
+    form input, form button {
+      width: 100%;
+      margin-bottom: 1em;
+    }
+    .top-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 1em;
+    }
+    .top-nav a {
+      font-size: 0.8em;
+    }
+    .error-message {
+      color: red;
+    }
+  </style>
+  <title>로그인</title>
+</head>
+<body>
+<div class="container text-center">
+  <div class="top-nav">
+    <a href="/">Home</a>
+  </div>
+  <h1>로그인</h1>
+  <div class="form-container">
+    <p th:if="${errors?.containsKey('login')}" th:text="${errors.get('login')}" class="error-message"></p>
+    <form action="" method="post">
+      <input type="text" name="loginId" placeholder="아이디" class="form-control">
+      <p th:if="${errors?.containsKey('loginId')}" th:text="${errors.get('loginId')}" class="error-message"></p>
+      <input type="password" name="password" placeholder="비밀번호" class="form-control">
+      <p th:if="${errors?.containsKey('password')}" th:text="${errors.get('password')}" class="error-message"></p>
+      <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+    <p>계정이 없으신가요? <a href="/register">회원가입</a></p>
+    <a href="/oauth2/authorization/google">구글 로그인</a>
+    <a href="/oauth2/authorization/facebook">페이스북 로그인</a>
+    <a href="/oauth2/authorization/naver">네이버 로그인</a>
+    <a href="/oauth2/authorization/kakao"> 카카오 로그인</a>
+  </div>
+
+  <form action="/logout" method="post" th:if="${session.loginMember != null}">
+    <button type="submit" class="btn btn-secondary">로그아웃</button>
+  </form>
+</div>
+</body>
+</html>

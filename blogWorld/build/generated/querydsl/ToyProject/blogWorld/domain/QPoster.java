@@ -36,13 +36,17 @@ public class QPoster extends EntityPathBase<Poster> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
+    public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
+
+    public final ListPath<Reply, QReply> replyList = this.<Reply, QReply>createList("replyList", Reply.class, QReply.class, PathInits.DIRECT2);
+
     public final ListPath<Tag, QTag> tagList = this.<Tag, QTag>createList("tagList", Tag.class, QTag.class, PathInits.DIRECT2);
 
     public final StringPath title = createString("title");
 
-    public final StringPath titlePic = createString("titlePic");
-
     public final BooleanPath valid = createBoolean("valid");
+
+    public final NumberPath<Integer> viewCount = createNumber("viewCount", Integer.class);
 
     public QPoster(String variable) {
         this(Poster.class, forVariable(variable), INITS);

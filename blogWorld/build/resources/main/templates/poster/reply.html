@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>댓글 예제</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6m8AeFCEUJL2I2ImjQF82c1FGOp6tb"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container mt-5">
+  <!-- 댓글 목록 -->
+  <div th:each="reply : ${replies}">
+    <div class="card mt-3">
+      <div class="card-body">
+        <p th:text="${reply.getContents()}"></p>
+        <!-- childReply가 있는 경우 버튼을 통해 열고 닫을 수 있게 함 -->
+        <button class="btn btn-link" data-toggle="collapse" th:if="${reply.getChildReply().size() > 0}"
+                th:data-target="'#childReplies-' + ${reply.id}">답글 보기/닫기
+        </button>
+        <!-- childReply 목록을 펼치는 부분 -->
+        <div th:id="'childReplies-' + ${reply.getId()}" class="collapse">
+          <div th:each="childReply : ${reply.getChildReply()}">
+            <p th:text="${childReply.getContents()}"></p>
+            <!-- 추가적인 필요한 정보 표시 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 댓글 작성 폼 -->
+  <!-- 필요한 필드 및 버튼을 추가하여 작성 폼을 완성하세요 -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-X1nUhz7yyBwq8Ybz7zApZz4yShEL9K4tWzo0cYQk5v6UihQosW94U+UHfBn/a"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6m8AeFCEUJL2I2ImjQF82c1FGOp6tb"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

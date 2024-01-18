@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Blog World !</title>
+</head>
+<body>
+<!-- 로그인 버튼 또는 사용자 프로필 -->
+<div class="text-right my-2">
+    <div th:if="${user}">
+        <a href="/user" class="text-decoration-none text-dark">
+            <img th:src="${user.profileImage != null} ? ${user.profileImage} : '/images/default-profile.png'" class="rounded-circle" width="50" height="50" alt="Profile Image">
+            <span th:text="${user.getUserName()}"></span>
+        </a>
+        <form action="/logout" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-outline-secondary ml-2">로그아웃</button>
+        </form>
+    </div>
+    <div th:unless="${user}">
+        <a href="/login" class="text-decoration-line-through">로그인</a>
+    </div>
+</div>
+
+
+<!-- 블로그 리스트 -->
+<div class="container">
+    <h1 class="text-center my-4">Blog World !</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="search" placeholder="검색어 입력">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">검색</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- 블로그 리스트 출력 -->
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="/blog/1234">블로그</a>
+                </li>
+
+                <li class="list-group-item" th:each="blog : ${blogs}">
+                    <a th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.name}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
