@@ -56,7 +56,8 @@ jobs:
         run: |
           echo "DOCKER_ID=${{ secrets.DOCKER_ID }}"
           echo "DOCKER_REPO=${{ secrets.DOCKER_REPO }}"
-    
+          cd ./blogWorld || exit 1  # Navigate to the blogWorld folder or exit if it fails
+          
           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/goorm .
           docker push ${{ secrets.DOCKER_REPO }}/goorm
