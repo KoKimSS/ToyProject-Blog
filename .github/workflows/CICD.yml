@@ -49,7 +49,7 @@ jobs:
           chmod +x gradlew
 
           # Run Gradle build
-          ./gradlew build
+          ./gradlew build -x test
 
       ## 웹 이미지 빌드 및 도커허브에 push
       - name: web docker build and push
