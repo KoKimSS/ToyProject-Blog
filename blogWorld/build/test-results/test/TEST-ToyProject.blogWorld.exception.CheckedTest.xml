@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ToyProject.blogWorld.exception.CheckedTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-01-16T15:56:32" hostname="DESKTOP-RRMPC7C" time="0.081">
+<testsuite name="ToyProject.blogWorld.exception.CheckedTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-01-18T10:20:40" hostname="DESKTOP-RRMPC7C" time="0.016">
   <properties/>
-  <testcase name="checked_catch()" classname="ToyProject.blogWorld.exception.CheckedTest" time="0.009"/>
-  <testcase name="checked_throw()" classname="ToyProject.blogWorld.exception.CheckedTest" time="0.071"/>
-  <system-out><![CDATA[2024-01-17 00:56:32.575  INFO 5084 --- [    Test worker] T.blogWorld.exception.CheckedTest        : 예외 처리 , message = repository exception
+  <testcase name="checked_catch()" classname="ToyProject.blogWorld.exception.CheckedTest" time="0.012"/>
+  <testcase name="checked_throw()" classname="ToyProject.blogWorld.exception.CheckedTest" time="0.003"/>
+  <system-out><![CDATA[2024-01-18 19:20:40.056  INFO 22628 --- [    Test worker] T.blogWorld.exception.CheckedTest        : 예외 처리 , message = repository exception
 
 ToyProject.blogWorld.exception.CheckedTest$MyCheckedException: repository exception
 	at ToyProject.blogWorld.exception.CheckedTest$Repository.call(CheckedTest.java:61) ~[test/:na]

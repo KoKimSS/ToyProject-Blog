@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@ToString(of = {"id", "username", "name",})
+@ToString(of = {"id", "name"})
 public class User extends BaseEntity {
     @Id
     @GeneratedValue

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ToyProject.blogWorld.exception.UncheckedTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-01-16T15:56:32" hostname="DESKTOP-RRMPC7C" time="0.008">
+<testsuite name="ToyProject.blogWorld.exception.UncheckedTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-01-18T10:20:40" hostname="DESKTOP-RRMPC7C" time="0.007">
   <properties/>
-  <testcase name="unchecked_catch()" classname="ToyProject.blogWorld.exception.UncheckedTest" time="0.006"/>
+  <testcase name="unchecked_catch()" classname="ToyProject.blogWorld.exception.UncheckedTest" time="0.005"/>
   <testcase name="unchecked_throw()" classname="ToyProject.blogWorld.exception.UncheckedTest" time="0.001"/>
-  <system-out><![CDATA[2024-01-17 00:56:32.654  INFO 5084 --- [    Test worker] T.blogWorld.exception.UncheckedTest      : 예외 처리, message = Repository Unchecked Exception
+  <system-out><![CDATA[2024-01-18 19:20:40.068  INFO 22628 --- [    Test worker] T.blogWorld.exception.UncheckedTest      : 예외 처리, message = Repository Unchecked Exception
 
 ToyProject.blogWorld.exception.UncheckedTest$MyUncheckedException: Repository Unchecked Exception
 	at ToyProject.blogWorld.exception.UncheckedTest$Repository.call(UncheckedTest.java:60) ~[test/:na]
