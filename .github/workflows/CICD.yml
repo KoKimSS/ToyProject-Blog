@@ -1,0 +1,71 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      ## create application-database.yml
+      - name: make application-database.yml
+        run: |
+          # Check the current directory
+          pwd
+
+          # List the contents of the current directory
+          ls
+
+          # Navigate to the blogWorld folder
+          cd ./blogWorld || exit 1
+
+          # application-database.yml 파일 생성
+          touch ./src/main/resources/application-database.yml
+          
+          # GitHub-Actions 에서 설정한 값을 application-database.yml 파일에 쓰기
+          echo "${{ secrets.DATABASE }}" >> ./src/main/resources/application-database.yml
+        shell: bash
+
+      - name: Build with Gradle
+        run: |
+          # Navigate to the blogWorld folder
+          cd ./blogWorld || exit 1
+          
+          # Give execute permissions to gradlew
+          chmod +x gradlew
+
+          # Run Gradle build
+          ./gradlew build
+
+      ## 웹 이미지 빌드 및 도커허브에 push
+      - name: web docker build and push
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} . 
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+      ## docker compose up
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            sudo docker rm $(sudo docker ps -a)
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+            docker-compose up -d
+            sudo docker image prune -f
