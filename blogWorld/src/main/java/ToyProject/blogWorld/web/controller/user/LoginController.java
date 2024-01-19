@@ -101,7 +101,7 @@ public class LoginController {
         if (!StringUtils.hasText(loginId)) {
             errors.put("userUid", "유저 아이디는 필수 입니다."); //유저 이름은 15글자 까지
         } else {
-            if(!userRepository.existsByloginId(loginId)){
+            if(userRepository.existsByloginId(loginId)){
                 errors.put("loginId", "중복된 아이디 입니다");
             }else {
                 if (loginId.length() > 15) {
