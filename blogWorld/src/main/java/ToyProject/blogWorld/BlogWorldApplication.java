@@ -32,7 +32,6 @@ public class BlogWorldApplication {
 	}
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(BlogWorldApplication.class, args);
 	}
 

@@ -3,4 +3,5 @@ spring:
     include:
         - common
         - database
-    active: ${environment}
+#    active: ${environment}
+    active : local
