@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.web.controller.poster;
 
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.poster.PosterDto;
 import ToyProject.blogWorld.repository.poster.PosterRepository;
 import ToyProject.blogWorld.repository.reply.ReplyRepository;
@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 import static ToyProject.blogWorld.web.util.ControllerUtil.findAndAddUserToModel;
 
@@ -44,7 +47,8 @@ public class PosterController {
         model.addAttribute("replies",
                 replyRepository.findAllByPosterIdAndParentsReplyIsNull(posterId).orElse(null));
         model.addAttribute("isOwner", blogService.isBlogOwner(blogId, user));
-        return "/poster/poster";
+        log.info("getPoster 수행");
+        return "poster/poster";
     }
 
     @GetMapping("blog/{blogId}/poster/{posterId}/edit")
@@ -53,17 +57,23 @@ public class PosterController {
                              Model model) {
         categoryService.findCategoryAndAddToModel(blogId, model);
         model.addAttribute("poster", posterRepository.findById(posterId).get());
-        return "/blog/editPoster";
+        return "blog/editPoster";
     }
 
-    @PostMapping("blog/{blogId}/poster/{posterId}/edit")
-    String editPoster(@PathVariable(required = false) Long blogId,
-                      @PathVariable(required = false) Long posterId,
-                      @ModelAttribute PosterDto posterDto,
-                      Model model) {
+    @RequestMapping(value = "blog/{blogId}/poster/{posterId}/edit", method = RequestMethod.PATCH)
+    void editPoster(@PathVariable(required = false) Long blogId,
+                                      @PathVariable(required = false) Long posterId,
+                                      @ModelAttribute PosterDto posterDto,
+                                      Model model,
+                                      HttpServletResponse response) throws IOException {
         categoryService.findCategoryAndAddToModel(blogId, model);
         posterService.updatePosterByDto(posterId, posterDto);
-        return "redirect:/blog/" + blogId + "/poster/" + posterId;
+        String redirectUrl = "/blog/" + blogId + "/poster/" + posterId;
+        System.out.println("redirectUrl = " + redirectUrl);
+        response.setStatus(HttpServletResponse.SC_SEE_OTHER);
+        response.sendRedirect(redirectUrl);
+        response.setHeader("redirectUrl",redirectUrl);
+        // 리다이렉션을 원하는 경우
     }
 
     @PostMapping("blog/{blogId}/poster/{posterId}/reply")

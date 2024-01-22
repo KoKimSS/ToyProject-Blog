@@ -27,11 +27,12 @@ configurations {
 
 repositories {
 	dependencies {
+		//web
 		implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 		implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'             // Thymeleaf Layout
-		implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7'
 		implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.13'        // Spring Webflux
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5' //
 
 		//Oauth2 , Security
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -42,6 +43,7 @@ repositories {
 		// JPA, dsl
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+		implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7'
 		annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 		runtimeOnly 'com.mysql:mysql-connector-j'
 		runtimeOnly 'com.h2database:h2' // 테스트 코드 작성시 사용할 DB(H2)

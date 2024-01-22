@@ -2,7 +2,7 @@ package ToyProject.blogWorld.config.oauth;
 
 import ToyProject.blogWorld.config.auth.PrincipalDetails;
 import ToyProject.blogWorld.config.oauth.provider.*;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

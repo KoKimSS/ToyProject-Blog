@@ -1,10 +1,12 @@
 package ToyProject.blogWorld.config.jwt;
 
 import ToyProject.blogWorld.config.auth.PrincipalDetails;
-import ToyProject.blogWorld.domain.User;
-import com.auth0.jwt.algorithms.Algorithm;
+import ToyProject.blogWorld.dto.LoginDto;
+import ToyProject.blogWorld.entity.User.User;
+import ToyProject.blogWorld.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,11 +19,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-
-import com.auth0.jwt.JWT;
 
 import static ToyProject.blogWorld.config.jwt.JwtTokenUtil.getJwtToken;
+import static ToyProject.blogWorld.config.jwt.JwtTokenUtil.setTokenToCookie;
 
 /**
  * 스프링 시큐리티에서 UsernamePasswordAuthenticationFilter 가 있음
@@ -30,30 +30,37 @@ import static ToyProject.blogWorld.config.jwt.JwtTokenUtil.getJwtToken;
  */
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final boolean postOnly = true;
+
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        System.out.println("JwtAuthenticationFilter : 로그인 시도중");
+        log.info("JwtAuthenticationFilter 로그인 : 진입");
+        //로그인 요청 시 들어온 데이터를 객체로 변환
+        ObjectMapper om = new ObjectMapper();
+        LoginDto userLoginDto = null;
+        try {
+            userLoginDto = om.readValue(request.getInputStream(), LoginDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to read JSON from request body", e);
+        }
+        String loginId = userLoginDto.getLoginId();
+        String password = userLoginDto.getPassword();
 
-        String loginId = request.getParameter("loginId");
-        System.out.println("loginId = " + loginId);
-        String password = request.getParameter("password");
-        System.out.println("password = " + password);
-        User user = User.createNewUser(loginId, password,null, null, null);
-        System.out.println(user.getLoginId()+" "+user.getPassword());
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getLoginId(), user.getPassword());
+                new UsernamePasswordAuthenticationToken(loginId, password);
 
         System.out.println("JwtAuthenticationFilter : 토큰생성완료");
         System.out.println(authenticationToken);
 
-        //PrincipalDetailsService의 loadUserByUsername() 실행
-        //DB에 있는 username 과 password 가 일치한다.
+        // PrincipalDetailsService의 loadUserByUsername() 실행
+        // DB에 있는 username 과 password 가 일치한다.
         Authentication authentication =
                 authenticationManager.authenticate(authenticationToken);
 
@@ -90,11 +97,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         System.out.println("successfulAuthentication 실행 됨 - 인증 완료");
-        PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 
-        String jwtToken = getJwtToken(principalDetailis);
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+        User user = principalDetails.getUser();
+        UserDto userDto = new UserDto(user.getId(), user.getLoginId(), user.getName());
+        String userDtoJson = convertObjectToJson(userDto);
+
+        //Json 형태로 userDto 를 보내준다.
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(userDtoJson);
+
+        //또한 JwtToken 을 쿠키에 넣어 보내준다.
+        String jwtToken = getJwtToken(principalDetails);
+        setTokenToCookie(response, jwtToken);
     }
 
-
+    private String convertObjectToJson(Object object) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(object);
+    }
 }

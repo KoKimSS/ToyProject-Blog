@@ -1,8 +1,9 @@
 package ToyProject.blogWorld.config.auth;
 
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,10 +22,9 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        System.out.println("PrincipalDetailsService 의 load 동작");
-        Optional<User> optionalUser = userRepository.findByLoginId(loginId);
-//        System.out.println(optionalUser.get());
-
-        return new PrincipalDetails(optionalUser.isPresent()?optionalUser.get():null);
+        System.out.println("loadUserByUsername 발동");
+        System.out.println("loginId = " + loginId);
+        User user = userRepository.findByLoginId(loginId).orElseThrow(()->new UsernameNotFoundException("유저네임이없습니다"));
+        return new PrincipalDetails(user);
     }
 }

@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.config.auth;
 
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

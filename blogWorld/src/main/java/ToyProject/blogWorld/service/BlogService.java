@@ -1,20 +1,18 @@
 package ToyProject.blogWorld.service;
 
-import ToyProject.blogWorld.domain.Blog;
-import ToyProject.blogWorld.domain.Category;
-import ToyProject.blogWorld.domain.Poster;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.Blog.Blog;
+import ToyProject.blogWorld.entity.Category.Category;
+import ToyProject.blogWorld.entity.Poster.Poster;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
-import ToyProject.blogWorld.repository.poster.PosterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
 
-import static ToyProject.blogWorld.domain.Category.*;
+import static ToyProject.blogWorld.entity.Category.Category.*;
 
 @Service
 @RequiredArgsConstructor

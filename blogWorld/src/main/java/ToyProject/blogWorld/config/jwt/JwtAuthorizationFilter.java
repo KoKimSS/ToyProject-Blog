@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.config.jwt;
 
 import ToyProject.blogWorld.config.auth.PrincipalDetails;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.user.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

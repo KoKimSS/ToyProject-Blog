@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.repository.poster;
 
-import ToyProject.blogWorld.domain.Poster;
+import ToyProject.blogWorld.entity.Poster.Poster;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

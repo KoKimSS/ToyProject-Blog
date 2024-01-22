@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.web.util;
 
 import ToyProject.blogWorld.config.auth.PrincipalDetails;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
@@ -10,9 +10,7 @@ public class ControllerUtil {
 
     // 유저가 있으면 return user 없으면 return null
     public static User findAndAddUserToModel(Model model) {
-        Authentication authentication = getAuthentication();
-        if (!isValidAuthentication(authentication)) return null;
-        User user = findUserFromAuth(authentication);
+        User user = findUserFromAuth();
         return addUserToModel(model, user);
     }
 
@@ -22,7 +20,9 @@ public class ControllerUtil {
         return user;
     }
 
-    private static User findUserFromAuth(Authentication authentication) {
+    public static User findUserFromAuth() {
+        Authentication authentication = getAuthentication();
+        if (!isValidAuthentication(authentication)) return null;
         if (!isInstanceOfPrincipalDetails(authentication)) {
             return null;
         }

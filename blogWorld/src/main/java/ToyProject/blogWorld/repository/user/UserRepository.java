@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.repository.user;
 
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.web.controller.user;
 
-import ToyProject.blogWorld.domain.Blog;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.Blog.Blog;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
 import ToyProject.blogWorld.repository.user.UserUpdateDto;
 import ToyProject.blogWorld.service.BlogService;

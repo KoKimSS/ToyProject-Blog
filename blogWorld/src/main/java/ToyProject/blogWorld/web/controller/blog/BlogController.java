@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.web.controller.blog;
 
-import ToyProject.blogWorld.domain.Category;
-import ToyProject.blogWorld.domain.Poster;
+import ToyProject.blogWorld.entity.Category.Category;
+import ToyProject.blogWorld.entity.Poster.Poster;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
 import ToyProject.blogWorld.repository.poster.PosterDto;

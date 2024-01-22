@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.service;
 
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.user.UserRepository;
 import ToyProject.blogWorld.repository.user.UserRepositoryImpl;
 import ToyProject.blogWorld.repository.user.UserUpdateDto;

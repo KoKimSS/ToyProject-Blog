@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.repository.reply;
 
-import ToyProject.blogWorld.domain.Reply;
+import ToyProject.blogWorld.entity.Reply.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

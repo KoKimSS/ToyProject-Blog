@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.service;
 
-import ToyProject.blogWorld.domain.Category;
+import ToyProject.blogWorld.entity.Category.Category;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

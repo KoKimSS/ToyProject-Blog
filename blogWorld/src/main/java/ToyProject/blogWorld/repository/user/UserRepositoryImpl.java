@@ -1,7 +1,6 @@
 package ToyProject.blogWorld.repository.user;
 
-import ToyProject.blogWorld.domain.QUser;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.User.QUser;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 

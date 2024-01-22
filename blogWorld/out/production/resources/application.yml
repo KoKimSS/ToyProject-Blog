@@ -5,3 +5,7 @@ spring:
         - database
 #    active: ${environment}
     active : local
+  mvc :
+    hiddenmethod:
+      filter:
+        enabled: true

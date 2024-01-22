@@ -1,14 +1,12 @@
 package ToyProject.blogWorld.service;
 
-import ToyProject.blogWorld.domain.Poster;
-import ToyProject.blogWorld.domain.Reply;
-import ToyProject.blogWorld.domain.User;
+import ToyProject.blogWorld.entity.Poster.Poster;
+import ToyProject.blogWorld.entity.Reply.Reply;
+import ToyProject.blogWorld.entity.User.User;
 import ToyProject.blogWorld.repository.poster.PosterRepository;
 import ToyProject.blogWorld.repository.reply.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

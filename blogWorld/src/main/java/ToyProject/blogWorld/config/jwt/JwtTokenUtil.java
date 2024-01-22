@@ -21,4 +21,12 @@ public class JwtTokenUtil {
                 .withClaim("loginId", principalDetailis.getUser().getLoginId())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
     }
+
+    public static void setTokenToCookie(HttpServletResponse response, String jwtToken) throws UnsupportedEncodingException {
+        jwtToken = URLEncoder.encode(JwtProperties.TOKEN_PREFIX+ jwtToken, "utf-8");
+        Cookie cookie = new Cookie(JwtProperties.HEADER_STRING, jwtToken);
+        cookie.setPath("/");
+        cookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
+        response.addCookie(cookie);
+    }
 }
