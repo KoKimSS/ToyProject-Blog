@@ -26,6 +26,6 @@
         <module name="blogWorld.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="14" />
   </component>
 </project>

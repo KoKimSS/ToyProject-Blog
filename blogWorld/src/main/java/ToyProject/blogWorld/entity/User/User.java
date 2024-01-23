@@ -2,6 +2,7 @@ package ToyProject.blogWorld.entity.User;
 
 import ToyProject.blogWorld.entity.Blog.Blog;
 import ToyProject.blogWorld.entity.baseEntity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -47,6 +48,14 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Blog> blogList = new ArrayList<>();
 
+    @Builder
+    public User(String loginId, String pw, String name, String phone, String email) {
+        this.loginId = loginId;
+        this.password = pw;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
 
     public static User createNewUser(String loginId, String pw, String name, String phone, String email) {
         User user = new User();
@@ -56,7 +65,6 @@ public class User extends BaseEntity {
         user.email = email;
         user.roles = "ROLE_USER";
         user.phone = phone;
-
         return user;
     }
 

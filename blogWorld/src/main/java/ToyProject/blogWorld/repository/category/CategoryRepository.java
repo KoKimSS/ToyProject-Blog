@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.repository.category;
 
 import ToyProject.blogWorld.entity.Category.Category;
-import ToyProject.blogWorld.dto.CategoryDTO;
+import ToyProject.blogWorld.entity.Category.CategoryDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -16,7 +16,7 @@ group = 'ToyProject'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '11'
+	sourceCompatibility = "14"
 }
 
 configurations {
@@ -80,3 +80,4 @@ compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }
 //querydsl 추가 끝
+targetCompatibility = JavaVersion.VERSION_14

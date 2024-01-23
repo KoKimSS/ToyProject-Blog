@@ -4,7 +4,7 @@ import ToyProject.blogWorld.entity.Category.Category;
 import ToyProject.blogWorld.entity.Poster.Poster;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
-import ToyProject.blogWorld.repository.poster.PosterDto;
+import ToyProject.blogWorld.entity.Poster.PosterUpdateDto;
 import ToyProject.blogWorld.repository.poster.PosterRepository;
 import ToyProject.blogWorld.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +34,9 @@ public class BlogController {
     }
 
     @PostMapping("blog/{blogId}/post")
-    String createPoster(@PathVariable(required = false) Long blogId, @ModelAttribute PosterDto posterDto, Model model) {
-        Category category = categoryRepository.findById(posterDto.getCategoryId()).get();
-        posterRepository.save(Poster.createPoster(posterDto.getTitle(), posterDto.getTitle(), category));
+    String createPoster(@PathVariable(required = false) Long blogId, @ModelAttribute PosterUpdateDto posterUpdateDto, Model model) {
+        Category category = categoryRepository.findById(posterUpdateDto.getCategoryId()).get();
+        posterRepository.save(new Poster(posterUpdateDto.getTitle(), posterUpdateDto.getTitle(), category));
         return "redirect:/blog/" + blogId;
     }
 

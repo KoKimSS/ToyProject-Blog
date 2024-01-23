@@ -3,7 +3,6 @@ spring:
     include:
         - common
         - database
-#    active: ${environment}
     active : local
   mvc :
     hiddenmethod:

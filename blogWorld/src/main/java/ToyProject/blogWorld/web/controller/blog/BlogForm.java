@@ -1,6 +1,6 @@
 package ToyProject.blogWorld.web.controller.blog;
 
-import ToyProject.blogWorld.dto.CategoryDTO;
+import ToyProject.blogWorld.entity.Category.CategoryDTO;
 import lombok.Data;
 
 import java.util.List;

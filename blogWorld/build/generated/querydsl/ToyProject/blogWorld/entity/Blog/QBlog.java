@@ -26,6 +26,8 @@ public class QBlog extends EntityPathBase<Blog> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath imgPath = createString("imgPath");
+
     public final StringPath name = createString("name");
 
     public final ToyProject.blogWorld.entity.User.QUser user;

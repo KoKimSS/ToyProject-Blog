@@ -1,9 +1,11 @@
 package ToyProject.blogWorld.entity.Poster;
 
 import ToyProject.blogWorld.entity.Category.Category;
+import ToyProject.blogWorld.entity.Like.Like;
 import ToyProject.blogWorld.entity.Reply.Reply;
 import ToyProject.blogWorld.entity.Tag.Tag;
 import ToyProject.blogWorld.entity.baseEntity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,17 +32,28 @@ public class Poster extends BaseTimeEntity {
     private boolean valid;
     private int viewCount;
     private int likeCount;
+    @OneToMany(mappedBy = "poster",cascade = CascadeType.ALL)
+    private List<Like> likeList = new ArrayList<>();
     @OneToMany(mappedBy = "poster",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tagList = new ArrayList<>();
     @OneToMany(mappedBy = "poster", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
-    public static Poster createPoster(String title, String contents, Category category) {
-        Poster poster = new Poster();
-        poster.title = title;
-        poster.contents = contents;
-        poster.category = category;
-        return poster;
+
+    @Builder
+    public Poster(String title, String contents, Category category,int viewCount,int likeCount) {
+        this.title = title;
+        this.contents = contents;
+        this.category = category;
+        this.viewCount = viewCount;
+        this.likeCount = likeCount;
+    }
+
+    @Builder
+    public Poster(String title, String contents, Category category) {
+        this.title = title;
+        this.contents = contents;
+        this.category = category;
     }
 
     public void editPoster(String title, String contents, Category category) {
@@ -55,5 +68,12 @@ public class Poster extends BaseTimeEntity {
     }
     public static void incrementViewCount(Poster poster){
         poster.viewCount++;
+    }
+    public static void incrementLikeCount(Poster poster){
+        poster.likeCount++;
+    }
+
+    public static void decrementLikeCount(Poster poster){
+        poster.likeCount--;
     }
 }

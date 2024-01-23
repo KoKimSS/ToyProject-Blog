@@ -3,7 +3,7 @@ package ToyProject.blogWorld.service;
 import ToyProject.blogWorld.entity.Category.Category;
 import ToyProject.blogWorld.entity.Poster.Poster;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
-import ToyProject.blogWorld.repository.poster.PosterDto;
+import ToyProject.blogWorld.entity.Poster.PosterUpdateDto;
 import ToyProject.blogWorld.repository.poster.PosterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import static ToyProject.blogWorld.entity.Poster.Poster.*;
 public class PosterService {
     private final PosterRepository posterRepository;
     private final CategoryRepository categoryRepository;
-    public void updatePosterByDto(Long posterId,PosterDto posterDto) {
+    public void updatePosterByDto(Long posterId, PosterUpdateDto posterUpdateDto) {
         Poster poster = posterRepository.findById(posterId).get();
-        Category category = categoryRepository.findById(posterDto.getCategoryId()).get();
-        poster.editPoster(posterDto.getTitle(),posterDto.getContents(),category);
+        Category category = categoryRepository.findById(posterUpdateDto.getCategoryId()).get();
+        poster.editPoster(posterUpdateDto.getTitle(), posterUpdateDto.getContents(),category);
         System.out.println("poster.getContents() = " + poster.getContents());
     }
 

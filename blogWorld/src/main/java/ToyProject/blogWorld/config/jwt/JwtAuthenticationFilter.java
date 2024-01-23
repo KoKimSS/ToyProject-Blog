@@ -1,9 +1,9 @@
 package ToyProject.blogWorld.config.jwt;
 
 import ToyProject.blogWorld.config.auth.PrincipalDetails;
-import ToyProject.blogWorld.dto.LoginDto;
+import ToyProject.blogWorld.entity.User.LoginDto;
 import ToyProject.blogWorld.entity.User.User;
-import ToyProject.blogWorld.dto.UserDto;
+import ToyProject.blogWorld.entity.User.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

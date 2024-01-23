@@ -1,9 +1,9 @@
 package ToyProject.blogWorld.web.controller.blog;
 
 import ToyProject.blogWorld.entity.Blog.Blog;
-import ToyProject.blogWorld.dto.CategoryDTO;
+import ToyProject.blogWorld.entity.Category.CategoryDTO;
 import ToyProject.blogWorld.repository.blog.BlogRepository;
-import ToyProject.blogWorld.dto.BlogWithCateDto;
+import ToyProject.blogWorld.entity.Blog.BlogWithCateDto;
 import ToyProject.blogWorld.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

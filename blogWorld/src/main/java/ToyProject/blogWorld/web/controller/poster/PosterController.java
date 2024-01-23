@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.web.controller.poster;
 
 import ToyProject.blogWorld.entity.User.User;
-import ToyProject.blogWorld.repository.poster.PosterDto;
+import ToyProject.blogWorld.entity.Poster.PosterUpdateDto;
 import ToyProject.blogWorld.repository.poster.PosterRepository;
 import ToyProject.blogWorld.repository.reply.ReplyRepository;
 import ToyProject.blogWorld.service.BlogService;
@@ -63,11 +63,11 @@ public class PosterController {
     @RequestMapping(value = "blog/{blogId}/poster/{posterId}/edit", method = RequestMethod.PATCH)
     void editPoster(@PathVariable(required = false) Long blogId,
                                       @PathVariable(required = false) Long posterId,
-                                      @ModelAttribute PosterDto posterDto,
+                                      @ModelAttribute PosterUpdateDto posterUpdateDto,
                                       Model model,
                                       HttpServletResponse response) throws IOException {
         categoryService.findCategoryAndAddToModel(blogId, model);
-        posterService.updatePosterByDto(posterId, posterDto);
+        posterService.updatePosterByDto(posterId, posterUpdateDto);
         String redirectUrl = "/blog/" + blogId + "/poster/" + posterId;
         System.out.println("redirectUrl = " + redirectUrl);
         response.setStatus(HttpServletResponse.SC_SEE_OTHER);

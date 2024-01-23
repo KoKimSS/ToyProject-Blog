@@ -1,7 +1,7 @@
 package ToyProject.blogWorld.web.controller.user;
 
 import ToyProject.blogWorld.entity.User.User;
-import ToyProject.blogWorld.dto.UserDto;
+import ToyProject.blogWorld.entity.User.UserDto;
 import ToyProject.blogWorld.web.util.ControllerUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -26,11 +26,7 @@ public class QCategory extends EntityPathBase<Category> {
 
     public final StringPath categoryName = createString("categoryName");
 
-    public final ListPath<Category, QCategory> childCategoryList = this.<Category, QCategory>createList("childCategoryList", Category.class, QCategory.class, PathInits.DIRECT2);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final QCategory parentCategory;
 
     public final ListPath<ToyProject.blogWorld.entity.Poster.Poster, ToyProject.blogWorld.entity.Poster.QPoster> posterList = this.<ToyProject.blogWorld.entity.Poster.Poster, ToyProject.blogWorld.entity.Poster.QPoster>createList("posterList", ToyProject.blogWorld.entity.Poster.Poster.class, ToyProject.blogWorld.entity.Poster.QPoster.class, PathInits.DIRECT2);
 
@@ -53,7 +49,6 @@ public class QCategory extends EntityPathBase<Category> {
     public QCategory(Class<? extends Category> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.blog = inits.isInitialized("blog") ? new ToyProject.blogWorld.entity.Blog.QBlog(forProperty("blog"), inits.get("blog")) : null;
-        this.parentCategory = inits.isInitialized("parentCategory") ? new QCategory(forProperty("parentCategory"), inits.get("parentCategory")) : null;
     }
 
 }

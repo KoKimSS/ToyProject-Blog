@@ -33,5 +33,4 @@ public class OAuthAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
         log.info("redirectUrl = {}", redirectUrl);
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
-
 }

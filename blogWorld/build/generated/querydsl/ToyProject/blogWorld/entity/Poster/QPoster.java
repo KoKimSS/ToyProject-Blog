@@ -33,6 +33,8 @@ public class QPoster extends EntityPathBase<Poster> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath imgPath = createString("imgPath");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 

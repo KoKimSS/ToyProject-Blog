@@ -31,7 +31,6 @@ public class BlogWorldApplication {
 
 		return new JPAQueryFactory(entityManager);
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(BlogWorldApplication.class, args);
 	}

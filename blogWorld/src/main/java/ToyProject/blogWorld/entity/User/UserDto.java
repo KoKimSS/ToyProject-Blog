@@ -1,4 +1,4 @@
-package ToyProject.blogWorld.dto;
+package ToyProject.blogWorld.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
